@@ -12,22 +12,47 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def get_file_list(folder_path: str, p_postfix: list = None, sub_dir: bool = True) -> list:
+def get_datalist(train_data_path):
     """
-    获取所给文件目录里的指定后缀的文件,读取文件列表目前使用的是 os.walk 和 os.listdir ，这两个目前比 pathlib 快很多
-    :param filder_path: 文件夹名称
-    :param p_postfix: 文件后缀,如果为 [.*]将返回全部文件
-    :param sub_dir: 是否搜索子文件夹
-    :return: 获取到的指定类型的文件列表
+    Reads train.txt/test.txt and returns a list of (image_path, label_path) tuples.
     """
-    assert os.path.exists(folder_path) and os.path.isdir(folder_path)
-    if p_postfix is None:
-        p_postfix = ['.jpg']
-    if isinstance(p_postfix, str):
-        p_postfix = [p_postfix]
-    file_list = [x for x in glob.glob(folder_path + '/**/*.*', recursive=True) if
-                 os.path.splitext(x)[-1] in p_postfix or '.*' in p_postfix]
-    return natsorted(file_list)
+    train_data = []
+    for p in train_data_path:
+        if not os.path.exists(p):
+            print(f"Error: File {p} not found!")
+            continue  # Skip if file does not exist
+
+        with open(p, 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                parts = line.strip().split('\t')
+                if len(parts) != 2:
+                    print(f"Warning: Malformed line in {p}: {line.strip()}")
+                    continue  # Skip incorrectly formatted lines
+
+                img_path, label_path = parts
+                if not os.path.exists(img_path) or not os.path.exists(label_path):
+                    print(f"Warning: File missing: {img_path} or {label_path}")
+                    continue  # Skip missing files
+                
+                train_data.append((img_path, label_path))
+    return train_data
+
+
+
+def get_file_list(folder, p_postfix=['.jpg', '.png', '.jpeg']):
+    """
+    Retrieve a list of image file paths from a directory.
+    
+    :param folder: Directory containing images
+    :param p_postfix: List of valid image extensions
+    :return: List of image file paths
+    """
+    file_list = []
+    for root, _, files in os.walk(folder):
+        for file in files:
+            if any(file.lower().endswith(ext) for ext in p_postfix):
+                file_list.append(os.path.join(root, file))
+    return file_list
 
 
 def setup_logger(log_file_path: str = None):
@@ -60,8 +85,17 @@ def exe_time(func):
 def load(file_path: str):
     file_path = pathlib.Path(file_path)
     func_dict = {'.txt': _load_txt, '.json': _load_json, '.list': _load_txt}
-    assert file_path.suffix in func_dict
+
+    if file_path.suffix not in func_dict:
+        print(f"Warning: Unsupported file type {file_path.suffix}, skipping {file_path}.")
+        return []  # Return an empty list to avoid crashing
+
+    if not file_path.exists():
+        print(f"Error: File {file_path} does not exist.")
+        return []  # Return an empty list instead of breaking
+
     return func_dict[file_path.suffix](file_path)
+
 
 
 def _load_txt(file_path: str):
