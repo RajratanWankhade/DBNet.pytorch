@@ -1,5 +1,7 @@
 # Project Title
 A pytorch re-implementation of Real-time Scene Text Detection with Differentiable Binarization : Updated model trained with 600 epochs and updated requirement.txt file.
+
+
 [Source Link to repo](https://github.com/WenmuZhou/DBNet.pytorch
 
 ## Dataset 
