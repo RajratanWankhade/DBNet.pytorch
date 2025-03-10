@@ -17,17 +17,25 @@ class ICDAR2015Dataset(BaseDataSet):
         super().__init__(data_path, img_mode, pre_processes, filter_keys, ignore_tags, transform)
 
     def load_data(self, data_path: str) -> list:
-        data_list = get_datalist(data_path)
-        t_data_list = []
-        for img_path, label_path in data_list:
-            data = self._get_annotation(label_path)
-            if len(data['text_polys']) > 0:
-                item = {'img_path': img_path, 'img_name': pathlib.Path(img_path).stem}
-                item.update(data)
-                t_data_list.append(item)
-            else:
-                print('there is no suit bbox in {}'.format(label_path))
-        return t_data_list
+            data_list = get_datalist(data_path)  # ✅ Correct function for parsing train.txt
+            t_data_list = []
+
+            for img_path, label_path in tqdm(data_list, desc='Reading dataset'):
+                if not os.path.exists(img_path) or not os.path.exists(label_path):
+                    print(f"Warning: Missing file - {img_path} or {label_path}")
+                    continue  # Skip missing files
+
+                data = self._get_annotation(label_path)
+                if 'text_polys' in data and len(data['text_polys']) > 0:
+                    item = {'img_path': img_path, 'img_name': pathlib.Path(img_path).stem}
+                    item.update(data)
+                    t_data_list.append(item)
+                else:
+                    print(f"Skipping {label_path} due to missing annotations.")
+            
+            return t_data_list
+
+
 
     def _get_annotation(self, label_path: str) -> dict:
         boxes = []
