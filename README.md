@@ -1,10 +1,4 @@
-# Real-time Scene Text Detection with Differentiable Binarization
-
-### My Setup
-
-- Windows 11 running on Nvidia RTX 3060 GPU 8GB Ram 
-- For 300 Epochs it took around 8 Hours 
-- For whole 1200 Epochs: Author said takes around a day.  
+# Project Title
 
 ## Changes Made
 
@@ -14,9 +8,11 @@
 
 ## Data Preparation
 
-A new script has been added to the `datasets` directory to prepare data for training. 
+A new script has been added to the `datasets` directory to prepare data for training. This script handles data loading, preprocessing, and augmentation.
 
-
+### Output
+![Predicted Image](test/output/img_10_pred.jpg)
+![Result Image](test/output/img_10_result.jpg)
 
 
 ### Usage
@@ -24,4 +20,4 @@ A new script has been added to the `datasets` directory to prepare data for trai
 To prepare your data for training, run the following script:
 
 ```sh
-python datasets/prepare_data.py  
+python datasets/prepare_data.py
