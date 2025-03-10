@@ -18,8 +18,15 @@ A pytorch re-implementation of Real-time Scene Text Detection with Differentiabl
 
 A new script has been added to the `datasets` directory to prepare data for training. This script handles data loading, preprocessing, and augmentation.
 
+## run this script to executive training :
+```sh
+python tools/train.py --config_file config/icdar2015_resnet18_FPN_DBhead_polyLR.yaml
+```
+
+
+
 ## Output
-![Predicted Image](test/img_10_pred.jpg)
+![Predicted Image](test/input/img_10.jpg)
 ![Result Image](test/img_10_result.jpg)
 
 
