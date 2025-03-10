@@ -1,9 +1,9 @@
 name: DBNet
-base: ['config/icdar2015.yaml']
+base: ['config/SynthText.yaml']
 arch:
   type: Model
   backbone:
-    type: deformable_resnet18
+    type: resnet18
     pretrained: true
   neck:
     type: FPN
@@ -40,7 +40,7 @@ lr_scheduler:
     warmup_epoch: 3
 trainer:
   seed: 2
-  epochs: 1200
+  epochs: 600
   log_iter: 10
   show_images_iter: 50
   resume_checkpoint: ''
@@ -51,29 +51,11 @@ dataset:
   train:
     dataset:
       args:
-        data_path:
-          - ./datasets/train.txt
+        data_path: ./datasets/SynthText
         img_mode: RGB
     loader:
-      batch_size: 1
+      batch_size: 2
       shuffle: true
       pin_memory: true
-      num_workers: 6
+      num_workers: 2
       collate_fn: ''
-  validate:
-    dataset:
-      args:
-        data_path:
-          - ./datasets/test.txt
-        pre_processes:
-          - type: ResizeShortSize
-            args:
-              short_size: 736
-              resize_text_polys: false
-        img_mode: RGB
-    loader:
-      batch_size: 1
-      shuffle: true
-      pin_memory: false
-      num_workers: 6
-      collate_fn: ICDARCollectFN

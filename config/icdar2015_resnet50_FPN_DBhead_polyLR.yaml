@@ -3,7 +3,7 @@ base: ['config/icdar2015.yaml']
 arch:
   type: Model
   backbone:
-    type: resnet50
+    type: resnet18
     pretrained: true
   neck:
     type: FPN
@@ -35,12 +35,13 @@ optimizer:
     weight_decay: 0
     amsgrad: true
 lr_scheduler:
-  type: WarmupPolyLR
+  type: StepLR
   args:
-    warmup_epoch: 3
+    step_size: 10
+    gama: 0.8
 trainer:
   seed: 2
-  epochs: 1200
+  epochs: 500
   log_iter: 10
   show_images_iter: 50
   resume_checkpoint: ''
@@ -55,10 +56,10 @@ dataset:
           - ./datasets/train.txt
         img_mode: RGB
     loader:
-      batch_size: 16
+      batch_size: 1
       shuffle: true
       pin_memory: true
-      num_workers: 6
+      num_workers: 2
       collate_fn: ''
   validate:
     dataset:
@@ -75,5 +76,5 @@ dataset:
       batch_size: 1
       shuffle: true
       pin_memory: false
-      num_workers: 6
+      num_workers: 2
       collate_fn: ICDARCollectFN

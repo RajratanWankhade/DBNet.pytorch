@@ -3,7 +3,7 @@ base: ['config/open_dataset.yaml']
 arch:
   type: Model
   backbone:
-    type: deformable_resnet18
+    type: resnet18
     pretrained: true
   neck:
     type: FPN
@@ -52,7 +52,14 @@ dataset:
     dataset:
       args:
         data_path:
-          - ./datasets/train.json
+          - ./datasets/train.txt
+        transforms: # 对图片进行的变换方式
+          - type: ToTensor
+            args: {}
+          - type: Normalize
+            args:
+              mean: [0.485, 0.456, 0.406]
+              std: [0.229, 0.224, 0.225]
         img_mode: RGB
         load_char_annotation: false
         expand_one_char: false
@@ -60,13 +67,13 @@ dataset:
       batch_size: 2
       shuffle: true
       pin_memory: true
-      num_workers: 6
+      num_workers: 2
       collate_fn: ''
   validate:
     dataset:
       args:
         data_path:
-          - ./datasets/test.json
+          - ./datasets/test.txt
         pre_processes:
           - type: ResizeShortSize
             args:
@@ -79,5 +86,5 @@ dataset:
       batch_size: 1
       shuffle: true
       pin_memory: false
-      num_workers: 6
+      num_workers: 2
       collate_fn: ICDARCollectFN

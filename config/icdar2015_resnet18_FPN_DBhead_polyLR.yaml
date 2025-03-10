@@ -38,9 +38,10 @@ lr_scheduler:
   type: WarmupPolyLR
   args:
     warmup_epoch: 3
+    min_lr: 1e-7
 trainer:
   seed: 2
-  epochs: 1200
+  epochs: 600
   log_iter: 10
   show_images_iter: 50
   resume_checkpoint: ''
@@ -58,7 +59,7 @@ dataset:
       batch_size: 1
       shuffle: true
       pin_memory: true
-      num_workers: 6
+      num_workers: 2
       collate_fn: ''
   validate:
     dataset:
