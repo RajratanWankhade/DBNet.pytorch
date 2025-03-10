@@ -11,8 +11,8 @@
 A new script has been added to the `datasets` directory to prepare data for training. This script handles data loading, preprocessing, and augmentation.
 
 ### Output
-![Predicted Image](test/output/img_10_pred.jpg)
-![Result Image](test/output/img_10_result.jpg)
+![Predicted Image](test/img_10_pred.jpg)
+![Result Image](test/img_10_result.jpg)
 
 
 ### Usage
