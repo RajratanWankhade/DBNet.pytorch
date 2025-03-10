@@ -1,7 +1,7 @@
 # Project Title
 
 ##Dataset 
-![Dataset](https://drive.google.com/drive/folders/1b8s2NZ4MEMj7Zig7kcWHy-yoi1gGeaHz?usp=sharing)
+[Click here to access the dataset](https://drive.google.com/drive/folders/1b8s2NZ4MEMj7Zig7kcWHy-yoi1gGeaHz?usp=sharing)
 
 ## Changes Made
 
