@@ -1,7 +1,7 @@
 # Project Title
-A pytorch re-implementation of Real-time Scene Text Detection with Differentiable Binarization : Updated model trained with 600 epochs and updated requirement.txt file.
+A PyTorch re-implementation of Real-time Scene Text Detection with Differentiable Binarization, featuring an updated model trained for 600 epochs and an updated requirements.txt file.
 
-I have used windows 11 and Nvidia RTX 3060 8GB GPU card to train the model, took me aroung 8 hours to train on 300 epochs.
+The model was trained on Windows 11 using an NVIDIA RTX 3060 (8GB) GPU, with 300 epochs taking approximately 8 hours to complete.
 
 
 [Source Link to repo](https://github.com/WenmuZhou/DBNet.pytorch)
