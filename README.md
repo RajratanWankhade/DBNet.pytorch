@@ -20,7 +20,7 @@ The model was trained on Windows 11 using an NVIDIA RTX 3060 (8GB) GPU, with 300
 
 A new script has been added to the `datasets` directory to prepare data for training. This script handles data loading, preprocessing, and augmentation.
 
-## Run it to executive training :
+## Run it to start executive training :
 ```sh
 python tools/train.py --config_file config/icdar2015_resnet18_FPN_DBhead_polyLR.yaml
 ```
